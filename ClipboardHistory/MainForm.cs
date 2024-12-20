@@ -143,7 +143,7 @@ namespace ClipboardHistory
                             currentImage.Save(imageFilePath);
 
                             // Log the image save action
-                            string logEntry = $"{DateTime.Now:dd.MM.yyyy - HH:mm:ss}: Image saved at {imageFilePath}{Environment.NewLine}";
+                            string logEntry = $"[{DateTime.Now:dd.MM.yyyy - HH:mm:ss}]{Environment.NewLine}Image saved as 'Image_{ timestamp}.png'{Environment.NewLine}";
                             File.AppendAllText(logFilePath, logEntry);
                         }
                     }
