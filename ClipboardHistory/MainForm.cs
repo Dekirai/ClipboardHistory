@@ -14,8 +14,10 @@ namespace ClipboardHistory
 
         public MainForm()
         {
-            Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory);
+
             InitializeComponent();
+            Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory);
+            cb_LaunchWithWindows.Checked = Settings.Default.startup;
             StartMonitoring();
         }
 
