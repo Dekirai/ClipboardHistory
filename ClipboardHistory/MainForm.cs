@@ -145,7 +145,7 @@ namespace ClipboardHistory
                             currentImage.Save(imageFilePath);
 
                             // Log the image save action
-                            string logEntry = $"[{DateTime.Now:dd.MM.yyyy - HH:mm:ss}]{Environment.NewLine}Image saved as 'Image_{ timestamp}.png'{Environment.NewLine}";
+                            string logEntry = $"[{DateTime.Now:dd.MM.yyyy - HH:mm:ss}]{Environment.NewLine}Image saved as 'Image_{timestamp}.png'{Environment.NewLine}";
                             File.AppendAllText(logFilePath, logEntry);
                         }
                     }
@@ -166,9 +166,27 @@ namespace ClipboardHistory
             if (img1 == null || img2 == null)
                 return false;
 
-            // Compare image sizes as a simple way to detect differences
-            return img1.Width == img2.Width && img1.Height == img2.Height;
+            if (img1.Width != img2.Width || img1.Height != img2.Height)
+                return false;
+
+            using (var bmp1 = new Bitmap(img1))
+            using (var bmp2 = new Bitmap(img2))
+            {
+                for (int y = 0; y < bmp1.Height; y++)
+                {
+                    for (int x = 0; x < bmp1.Width; x++)
+                    {
+                        if (bmp1.GetPixel(x, y) != bmp2.GetPixel(x, y))
+                        {
+                            return false;
+                        }
+                    }
+                }
+            }
+
+            return true;
         }
+
 
 
         private void btn_Exit_Click(object sender, EventArgs e)
